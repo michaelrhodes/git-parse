@@ -23,12 +23,14 @@ module.exports = function (test) {
     ;(function next () {
       if (++i === total) return
 
-      console.log('\n=>', files[i])
+      if (i) console.log()
+      console.log('#', files[i])
 
       fs.createReadStream(pathify(files[i]))
-        .pipe(new block(128))
+        .pipe(new block(128, { nopad: true }))
         .pipe(parse())
-        .on('finish', next)
+        .pipe(json.stringify(false))
+        .on('end', next)
         .pipe(process.stdout)
     })()
   })
