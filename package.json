@@ -1,0 +1,27 @@
+{
+  "name": "git-parse",
+  "version": "1.0.0",
+  "description": "parse the output of git commands",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/"
+  },
+  "keywords": [
+    "git",
+    "output",
+    "parse"
+  ],
+  "author": "Michael Rhodes",
+  "license": "MIT",
+  "devDependencies": {
+    "JSONStream": "^0.10.0",
+    "block-stream": "0.0.7",
+    "glob": "^4.3.1"
+  },
+  "dependencies": {
+    "through2": "^0.6.3"
+  }
+}
