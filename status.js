@@ -38,7 +38,7 @@ module.exports = function () {
       return next()
     }
 
-    var isFile = regex[filetype].test(line)
+    var isFile = filetype && regex[filetype].test(line)
 
     // Parse unstaged file
     if (/unstaged/.test(filetype) && isFile) {
