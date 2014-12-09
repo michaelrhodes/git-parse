@@ -29,7 +29,7 @@ module.exports = function (test) {
       fs.createReadStream(pathify(files[i]))
         .pipe(new block(128, { nopad: true }))
         .pipe(parse())
-        .pipe(json.stringify(false))
+        .pipe(json.stringify('[', ',\n', ']\n', 2))
         .on('end', next)
         .pipe(process.stdout)
     })()
