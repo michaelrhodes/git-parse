@@ -2,6 +2,7 @@ var splice = require('stream-splicer')
 var filter = require('through2-filter')
 var through = require('through2')
 var split = require('split')
+var plain = require('strip-ansi')
 var match = require( './lib/match')
 var filetypes = {
   'Changes not staged for commit': 'unstaged',
@@ -28,7 +29,7 @@ module.exports = function () {
   }
 
   function parse (line, enc, next) {
-    line = line.toString()
+    line = plain(line.toString())
 
     // Set upcoming filetype group
     var heading = match(line, regex.heading)[1]
