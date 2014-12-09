@@ -2,7 +2,7 @@ var splice = require('stream-splicer')
 var filter = require('through2-filter')
 var through = require('through2')
 var split = require('split')
-var matches = require( './lib/match')
+var match = require( './lib/match')
 var filetypes = {
   'Changes not staged for commit': 'unstaged',
   'Untracked files': 'untracked',
@@ -31,16 +31,18 @@ module.exports = function () {
     line = line.toString()
 
     // Set upcoming filetype group
-    var heading = matches(line, regex.heading)[1]
+    var heading = match(line, regex.heading)[1]
     if (heading) {
       filetype = filetypes[heading]
       parsed[filetype] = []
       return next()
     }
 
+    var isFile = regex[filetype].test(line)
+
     // Parse unstaged file
-    if (/unstaged/.test(filetype) && regex[filetype].test(line)) {
-      var matched = matches(line, regex[filetype])
+    if (/unstaged/.test(filetype) && isFile) {
+      var matched = match(line, regex[filetype])
       var file = {
         status: matched[1],
         filename: matched[2]
@@ -50,15 +52,15 @@ module.exports = function () {
     }
 
     // Parse untracked or ignored file
-    if (/(untracked|ignored)/.test(filetype) && regex[filetype].test(line)) {
-      var filename = matches(line, regex[filetype])[1]
+    if (/(untracked|ignored)/.test(filetype) && isFile) {
+      var filename = match(line, regex[filetype])[1]
       parsed[filetype].push(filename)
       return next()
     }
 
     // Parse branch name
     if (!parsed.branch && regex.branch.test(line)) {
-      parsed.branch = matches(line, regex.branch)[1]
+      parsed.branch = match(line, regex.branch)[1]
       return next()
     }
 
