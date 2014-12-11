@@ -1,0 +1,12 @@
+# On branch bugfix/safari
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	deleted:    theme/assets/less/_media_queries.less
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   theme/assets/less/main.less
+#

@@ -1,0 +1,9 @@
+# On branch bugfix/safari
+# Changes not staged for commit:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	deleted:    theme/assets/less/_media_queries.less
+#	modified:   theme/assets/less/main.less
+#
+no changes added to commit (use "git add" and/or "git commit -a")
