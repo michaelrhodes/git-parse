@@ -5,6 +5,7 @@ var split = require('split')
 var plain = require('strip-ansi')
 var match = require( './lib/match')
 var filetypes = {
+  'Changes to be committed': 'staged',
   'Changes not staged for commit': 'unstaged',
   'Untracked files': 'untracked',
   'Ignored files': 'ignored'
@@ -18,6 +19,7 @@ var regex = {
   untracked: /^#\t(.+)$/
 }
 
+regex.staged = regex.unstaged 
 regex.ignored = regex.untracked
 
 module.exports = function () {
@@ -33,7 +35,7 @@ module.exports = function () {
 
     // Set upcoming filetype group
     var heading = match(line, regex.heading)[1]
-    if (heading) {
+    if (heading && filetypes[heading]) {
       filetype = filetypes[heading]
       parsed[filetype] = []
       return next()
@@ -42,7 +44,7 @@ module.exports = function () {
     var isFile = filetype && regex[filetype].test(line)
 
     // Parse unstaged file
-    if (/unstaged/.test(filetype) && isFile) {
+    if (/(un)?staged/.test(filetype) && isFile) {
       var matched = match(line, regex[filetype])
       var file = {
         status: matched[1],
